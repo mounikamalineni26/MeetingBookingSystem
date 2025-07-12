@@ -7,7 +7,9 @@ A simple Java application to book, view, and cancel meeting rooms. It has admin 
 - ✅ Cancel and view bookings
 - ✅ Admin can view all bookings
 - ✅ Data saved in `bookings.txt`
+- 🔐 Case-insensitive user recognition
 
+4
 ## 🔧 Technologies
 - Java
 - File I/O

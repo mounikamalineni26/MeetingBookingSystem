@@ -10,7 +10,7 @@ public class Main {
         String role = sc.nextLine().trim().toLowerCase();
 
         System.out.print("Enter your name: ");
-        String userName = sc.nextLine();
+        String userName = sc.nextLine().trim(); // preserve original capitalization
 
         boolean isAdmin = role.equals("admin");
 
@@ -27,17 +27,23 @@ public class Main {
             }
 
             System.out.print("Choose option: ");
+            if (!sc.hasNextInt()) {
+                System.out.println("[⚠️] Invalid input. Please enter a number.");
+                sc.nextLine(); // clear invalid input
+                continue;
+            }
+
             int choice = sc.nextInt();
-            sc.nextLine(); // Clear buffer
+            sc.nextLine(); // clear newline
 
             switch (choice) {
                 case 1:
                     System.out.print("Enter room name: ");
-                    String room = sc.nextLine();
+                    String room = sc.nextLine().trim();
                     System.out.print("Enter date (YYYY-MM-DD): ");
-                    String date = sc.nextLine();
-                    System.out.print("Enter time slot (e.g. 10:00-11:00): ");
-                    String time = sc.nextLine();
+                    String date = sc.nextLine().trim();
+                    System.out.print("Enter time slot (24-hour format,e.g. 10:00-11:00): ");
+                    String time = sc.nextLine().trim();
 
                     if (bookingService.bookRoom(userName, room, date, time)) {
                         System.out.println("[✅] Booking successful!");
@@ -47,16 +53,16 @@ public class Main {
                     break;
 
                 case 2:
-                    bookingService.showUserBookings(userName, isAdmin);
+                    bookingService.showUserBookings(userName, false);
                     break;
 
                 case 3:
                     System.out.print("Enter room name: ");
-                    room = sc.nextLine();
+                    room = sc.nextLine().trim();
                     System.out.print("Enter date (YYYY-MM-DD): ");
-                    date = sc.nextLine();
+                    date = sc.nextLine().trim();
                     System.out.print("Enter time slot: ");
-                    time = sc.nextLine();
+                    time = sc.nextLine().trim();
 
                     if (bookingService.cancelBooking(userName, room, date, time)) {
                         System.out.println("[✅] Booking cancelled.");
@@ -67,7 +73,7 @@ public class Main {
 
                 case 4:
                     if (isAdmin) {
-                        bookingService.showBookings();
+                        bookingService.showUserBookings(userName,true); // view all
                     } else {
                         System.out.println("Goodbye 👋");
                         sc.close();
@@ -80,8 +86,11 @@ public class Main {
                         System.out.println("Goodbye 👋");
                         sc.close();
                         return;
+                    } else {
+                        System.out.println("[⚠️] Invalid choice. Try again.");
                     }
-                    // fall-through if not admin
+                    break;
+
                 default:
                     System.out.println("[⚠️] Invalid choice. Try again.");
             }
