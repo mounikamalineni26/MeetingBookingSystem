@@ -83,6 +83,12 @@ Mounika, an employee, wants to book a meeting room for a client call. She opens 
 
 ---
 
+## 🚀 Future Improvements
+- Add time slot conflict detection
+- Migrate to GUI using Java Swing
+- Upgrade to full-stack version (Java + Spring Boot + React + MySQL)
+
+
 
 
 
