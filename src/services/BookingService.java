@@ -1,6 +1,8 @@
 package services;
 
 import models.Booking;
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +12,32 @@ public class BookingService {
     private static final String FILE_NAME = "bookings.txt";
 
     public BookingService() {
-        loadBookingsFromFile(); // Load bookings on startup
+        loadBookingsFromFile(); // Load bookings into memory
     }
 
-    public boolean isSlotAvailable(String room, String date, String timeSlot) {
+    // Updated method with user parameter
+    public boolean isSlotAvailable(String user, String room, String date, String timeSlot) {
         for (Booking b : bookings) {
+            // Check if anyone has booked the same slot
             if (b.getRoomName().equalsIgnoreCase(room) &&
                 b.getDate().equals(date) &&
-                b.getTimeSlot().equals(timeSlot)) {
-                return false;
+                b.getTimeSlot().equalsIgnoreCase(timeSlot)) {
+                return false; // Slot already taken
+            }
+
+            // Prevent same user booking multiple slots in same room+date
+            if (b.getUserName().equalsIgnoreCase(user) &&
+                b.getRoomName().equalsIgnoreCase(room) &&
+                b.getDate().equals(date)) {
+                return false; // Already booked on same room+date
             }
         }
         return true;
     }
 
+    // Book room if slot is available
     public boolean bookRoom(String user, String room, String date, String timeSlot) {
-        if (isSlotAvailable(room, date, timeSlot)) {
+        if (isSlotAvailable(user, room, date, timeSlot)) {
             Booking newBooking = new Booking(user, room, date, timeSlot);
             bookings.add(newBooking);
             saveBookingToFile(newBooking);
@@ -34,13 +46,19 @@ public class BookingService {
         return false;
     }
 
+    // Cancel booking
     public boolean cancelBooking(String user, String room, String date, String timeSlot) {
         Booking match = null;
+
+        // Normalize input
+        String normalizedInput = timeSlot.trim().toLowerCase().replaceAll("\\s+", "").replaceAll("am|pm", "");
+
         for (Booking b : bookings) {
+            String normalizedBookingTime = b.getTimeSlot().trim().toLowerCase().replaceAll("\\s+", "").replaceAll("am|pm", "");
             if (b.getUserName().equalsIgnoreCase(user) &&
                 b.getRoomName().equalsIgnoreCase(room) &&
                 b.getDate().equals(date) &&
-                b.getTimeSlot().equals(timeSlot)) {
+                normalizedBookingTime.equals(normalizedInput)) {
                 match = b;
                 break;
             }
@@ -48,29 +66,40 @@ public class BookingService {
 
         if (match != null) {
             bookings.remove(match);
-            rewriteFile(); // Update file
+            rewriteFile();
             return true;
         }
 
         return false;
     }
 
-    public void showUserBookings(String userName, boolean isAdmin) {
+    // GUI display of bookings
+    public void showUserBookingsGUI(Component parent, String userName, boolean isAdmin) {
+        StringBuilder sb = new StringBuilder();
         boolean found = false;
+
         for (Booking b : bookings) {
             if (isAdmin || b.getUserName().equalsIgnoreCase(userName)) {
-                System.out.println(b);
+                sb.append("👤 ").append(b.getUserName())
+                  .append(" | 🏢 ").append(b.getRoomName())
+                  .append(" | 📅 ").append(b.getDate())
+                  .append(" | ⏰ ").append(b.getTimeSlot())
+                  .append("\n");
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No bookings found.");
+            sb.append("❌ No bookings found.");
         }
+
+        JTextArea textArea = new JTextArea(sb.toString(), 15, 40);
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        JOptionPane.showMessageDialog(parent, scrollPane, "📋 Bookings", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ------------------- FILE METHODS -------------------
-
+    // Save one booking to file
     private void saveBookingToFile(Booking booking) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
             bw.write(booking.getUserName() + "," + booking.getRoomName() + "," + booking.getDate() + "," + booking.getTimeSlot());
@@ -80,6 +109,19 @@ public class BookingService {
         }
     }
 
+    // Rewrite all bookings to file
+    private void rewriteFile() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
+            for (Booking b : bookings) {
+                bw.write(b.getUserName() + "," + b.getRoomName() + "," + b.getDate() + "," + b.getTimeSlot());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("[ERROR] Could not rewrite bookings file.");
+        }
+    }
+
+    // Load bookings from file
     private void loadBookingsFromFile() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
@@ -97,17 +139,6 @@ public class BookingService {
             }
         } catch (IOException e) {
             System.out.println("[ERROR] Could not load bookings from file.");
-        }
-    }
-
-    private void rewriteFile() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Booking b : bookings) {
-                bw.write(b.getUserName() + "," + b.getRoomName() + "," + b.getDate() + "," + b.getTimeSlot());
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("[ERROR] Could not rewrite bookings file.");
         }
     }
 }

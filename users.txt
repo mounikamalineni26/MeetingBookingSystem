@@ -1,0 +1,6 @@
+admin,admin123,admin
+mouni,mouni123,user
+chintu,chintu123,user
+mintu,mintu123,user
+mounika,mounika123,user
+milky,milky123,user
