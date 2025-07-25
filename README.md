@@ -1,98 +1,65 @@
-# 🏢 Meeting Room Booking System (Java Console App)
+# 🏢 Meeting Room Booking System (Java Swing)
 
-A simple Java console-based application to **book**, **view**, and **cancel** meeting rooms. It supports both **admin** and **user** roles, with all data saved to a local file.
-
----
-
-## 👨‍💻 Features
-- ✅ Book rooms with date and time slot
-- ✅ Cancel and view your own bookings
-- ✅ Admin can view all users' bookings
-- ✅ Bookings saved persistently in `bookings.txt`
-- 🔐 Case-insensitive user recognition
+A **desktop-based Java application** built using **Java Swing** to manage the booking of meeting rooms in a college. This system solves the problem of manual room scheduling by providing a simple, interactive, and offline GUI interface for users and administrators.
 
 ---
 
-## 🔧 Technologies Used
-- Java (OOP)
-- File I/O (`BufferedReader`, `BufferedWriter`)
-- Collections (`ArrayList`)
-- CLI (Console-Based)
+## 📌 Features
+
+- 🔐 **Login & Registration** for Users and Admins  
+- 🧑‍💼 **Role-Based Dashboards**  
+  - Users: Book rooms, view and cancel their bookings  
+  - Admins: View all bookings, cancel any user's booking  
+- 📅 **Date & Time Slot Selection** with Dropdowns  
+- 🖼️ GUI built using **Java Swing**  
+- 💾 **File-based Storage** (No DB required)  
+- ✅ **Conflict-Free Booking Validation**  
+- 🚪 **Logout Confirmation**  
+- 🎓 Designed for college seminar rooms / club meetings  
 
 ---
 
-## 📁 Project Structure
+## 🛠️ Technologies Used
 
-```
-src/
-├── Main.java
-├── models/
-│   └── Booking.java
-├── services/
-│   └── BookingService.java
-bookings.txt
-```
+- Java  
+- Java Swing (GUI)  
+- OOP (Object-Oriented Programming)  
+- File Handling (For Data Persistence)  
 
 ---
 
-## ▶️ How to Run
+## 🔄 How It Works
 
-```bash
-cd src
-javac Main.java models/Booking.java services/BookingService.java
-java -cp . Main
- ```
-
----
-
-## 🧾 Sample Output
-
-```
-Are you a user or admin? (user/admin): user
-Enter your name: mounika
-
---- Meeting Room Booking ---
-1. Book a room
-2. View bookings
-3. Cancel booking
-4. Exit
-Choose option: 1
-Enter room name: BoardRoom
-Enter date (YYYY-MM-DD): 2025-07-12
-Enter time slot (e.g. 10:00-11:00): 10:00-11:00
-[✅] Booking successful!
-
-Choose option: 2
-Booking: mounika | BoardRoom | 2025-07-12 | 10:00-11:00
-```
+1. 🧑‍🎓 User **registers or logs in** from the GUI  
+2. 📅 Selects **date, time slot, and room** from dropdowns and books a slot  
+3. ✅ System checks for booking conflicts and confirms the slot  
+4. 📋 User can **view or cancel** their bookings from a table window  
+5. 🚪 User can **logout with confirmation**  
+6. 🧑‍💼 Admin logs in to **view all bookings**  
+7. ❌ Admin can **cancel any booking** made by users  
 
 ---
 
-## 💼 Example Use Case
+## 📚 Real-Life College Use Case
 
-Mounika, an employee, wants to book a meeting room for a client call. She opens the console app, logs in as a user, selects "Book a room", and confirms the time slot. Admins can later view or manage all bookings.
+This system solves a common college problem — managing room bookings for student clubs, faculty meetings, workshops, or guest lectures.
 
----
-
-## 📚 What I Learned
-
-- Working with Java File I/O and text-based persistence
-- Implementing clean user flows in console applications
-- Managing modular logic using OOP (Model + Service architecture)
-- Handling role-based access (Admin vs User)
+Instead of using registers or sending emails, students and staff can **book rooms instantly via the GUI**, ensuring no conflicts and better management.  
+Admins (HODs or faculty coordinators) get full visibility and control over room usage.
 
 ---
 
-## 🚀 Future Improvements
-- Add time slot conflict detection
-- Migrate to GUI using Java Swing
-- Upgrade to full-stack version (Java + Spring Boot + React + MySQL)
+## 💡 Future Enhancements
 
+- 🗃️ MySQL/SQLite integration for database storage  
+- ✅ Admin-based **approval system** before confirming bookings  
+- 📧 Email notifications to users after booking/cancellation  
+- 📤 Export bookings to Excel/PDF  
 
+---
 
+## 👤 Author
 
-
-
-
-
-
+**Mounika Malineni**  
+🎓 College Project | 💻 Java Developer  
+🔗 [GitHub Profile](https://github.com/mounikamalineni26)
