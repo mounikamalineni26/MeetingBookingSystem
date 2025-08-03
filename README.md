@@ -61,6 +61,7 @@ Admins (HODs or faculty coordinators) get full visibility and control over room 
 ## ▶️ How to Run
 
 To Compile:  javac -encoding UTF-8 models\*.java services\*.java gui\*.java Main.java
+
 To Run the application:  java -cp . Main
 
 
