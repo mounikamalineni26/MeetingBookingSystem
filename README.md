@@ -49,16 +49,14 @@ Admins (HODs or faculty coordinators) get full visibility and control over room 
 
 ---
 
-## 💡 Future Enhancements
+## 🚀 Future Enhancements
+- Migrate from file storage to database (MySQL/SQLite)
+- Add email notifications for booking confirmations
+- Implement user roles and booking approval workflows
 
-- 🗃️ MySQL/SQLite integration for database storage  
-- ✅ Admin-based **approval system** before confirming bookings  
-- 📧 Email notifications to users after booking/cancellation  
-- 📤 Export bookings to Excel/PDF  
-
----
-
-## 👤 Author
-
+## 🤝 Author
 **Mounika Malineni**  
-🔗 [GitHub Profile](https://github.com/mounikamalineni26)
+📧 mounikamalineni63@gmail.com  
+🔗 [GitHub Profile](https://github.com/mounikamalineni26)  
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/mounikamalineni)
+
